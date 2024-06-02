@@ -48,23 +48,23 @@ public:
         // 右边界
         if (x + rad > box.x + box.w) {
             x = box.x + box.w - rad;
-            vx *= -0.9f;  // 反弹并损失一些能量
+            vx *= -0.8f;  // 反弹并损失一些能量
         }
         // 左边界
         if (x - rad < box.x) {
             x = box.x + rad;
-            vx *= -0.9f;  // 反弹并损失一些能量
+            vx *= -0.8f;  // 反弹并损失一些能量
         }
         // 下边界
         if (y + rad > box.y + box.h) {
             y = box.y + box.h - rad;
-            vy *= -0.9f;  // 反弹并损失一些能量
-            vx *= 0.99f;  // 添加一些摩擦力
+            vy *= -0.8f;  // 反弹并损失一些能量
+            vx *= 0.98f;  // 添加一些摩擦力
         }
         // 上边界
         if (y - rad < box.y) {
             y = box.y + rad;
-            vy *= -0.9f;  // 反弹并损失一些能量
+            vy *= -0.8f;  // 反弹并损失一些能量
         }
     }
 
@@ -97,7 +97,7 @@ int main(int argc, char* args[]) {
     SDL_Init(SDL_INIT_VIDEO);
 
     // 创建窗口和渲染器
-    SDL_Window* window = SDL_CreateWindow("小球碰撞模拟", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("Ball Simulation", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     // 初始化小球和框的对象

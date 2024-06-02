@@ -12,22 +12,17 @@
 class Ball {
 public:
     // 构造函数，用于初始化小球对象
-    Ball(float x, float y, float vx, float vy, float rad, SDL_Color color) {   
-        x=x;
-        y=y;
-        vx=vx;
-        vy=vy;
-        rad=rad;
-        color=color;}
+    Ball(float x, float y, float vx, float vy, float radius, SDL_Color color)
+    : x(x), y(y), vx(vx), vy(vy), radius(radius), color(color) {}
 
     // 在渲染器上绘制小球的函数
     void draw(SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
-        for (int w = 0; w < rad * 2; w++) {
-            for (int h = 0; h < rad * 2; h++) {
-                int dx = rad - w;
-                int dy = rad - h;
-                if (dx * dx + dy * dy <= rad * rad) {
+        for (int w = 0; w < radius * 2; w++) {
+            for (int h = 0; h < radius * 2; h++) {
+                int dx = radius - w;
+                int dy = radius - h;
+                if (dx * dx + dy * dy <= radius * radius) {
                     SDL_RenderDrawPoint(renderer, x + dx, y + dy);
                 }
             }
@@ -46,32 +41,32 @@ public:
     // 碰撞检测和反应
     void checkCollision(const SDL_Rect& box) {
         // 右边界
-        if (x + rad > box.x + box.w) {
-            x = box.x + box.w - rad;
-            vx *= -0.9f;  // 反弹并损失一些能量
+        if (x + radius > box.x + box.w) {
+            x = box.x + box.w - radius;
+            vx *= -0.8f;  // 反弹并损失一些能量
         }
         // 左边界
-        if (x - rad < box.x) {
-            x = box.x + rad;
-            vx *= -0.9f;  // 反弹并损失一些能量
+        if (x - radius < box.x) {
+            x = box.x + radius;
+            vx *= -0.8f;  // 反弹并损失一些能量
         }
         // 下边界
-        if (y + rad > box.y + box.h) {
-            y = box.y + box.h - rad;
-            vy *= -0.9f;  // 反弹并损失一些能量
-            vx *= 0.99f;  // 添加一些摩擦力
+        if (y + radius > box.y + box.h) {
+            y = box.y + box.h - radius;
+            vy *= -0.8f;  // 反弹并损失一些能量
+            vx *= 0.98f;  // 添加一些摩擦力
         }
         // 上边界
-        if (y - rad < box.y) {
-            y = box.y + rad;
-            vy *= -0.9f;  // 反弹并损失一些能量
+        if (y - radius < box.y) {
+            y = box.y + radius;
+            vy *= -0.8f;  // 反弹并损失一些能量
         }
     }
 
     // 小球的公共属性
     float x, y; // 小球位置
     float vx, vy; // 小球速度
-    float rad; // 小球半径
+    float radius; // 小球半径
     SDL_Color color; // 小球颜色
 };
 
@@ -97,7 +92,7 @@ int main(int argc, char* args[]) {
     SDL_Init(SDL_INIT_VIDEO);
 
     // 创建窗口和渲染器
-    SDL_Window* window = SDL_CreateWindow("小球碰撞模拟", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("Ball Simulation", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     // 初始化小球和框的对象
